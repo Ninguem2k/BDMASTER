@@ -1,0 +1,164 @@
+unit MudoloDados;
+
+interface
+
+uses
+  System.SysUtils, System.Classes, FireDAC.UI.Intf, FireDAC.VCLUI.Wait,
+  FireDAC.Phys.FBDef, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Error, FireDAC.Phys.Intf, FireDAC.Stan.Def, FireDAC.Stan.Pool,
+  FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Phys.FB, Data.DB,
+  FireDAC.Comp.Client, FireDAC.Phys.IBBase, FireDAC.Comp.UI, FireDAC.Stan.Param,
+  FireDAC.DatS, FireDAC.DApt.Intf, FireDAC.DApt, FireDAC.Comp.DataSet;
+
+type
+  TDM = class(TDataModule)
+    WaitCursor: TFDGUIxWaitCursor;
+    Transacao: TFDTransaction;
+    FBDriver: TFDPhysFBDriverLink;
+    Conexao: TFDConnection;
+    qrySequencia: TFDQuery;
+    qryLookup: TFDQuery;
+  private
+    { Private declarations }
+    function NextSequenceValue(sSequenceName: String): Integer;
+    function LookupQuery(LookupKeyValues: Variant; sLookupKeyFields: String; sLookupTable: String; sLookupResultFields: String): Variant;
+    procedure DataSetLookupQuery(DataSet: TDataSet; sFields: String; LookupKeyValues: Variant; sLookupKeyFields: String; sLookupTable: String; sLookupResultFields: String);
+    procedure DataModuleCreate(Sender: TObject);
+    procedure DataModuleDestroy(Sender: TObject);
+    procedure FDConnectionBeforeConnect(Sender: TObject);
+  public
+    { Public declarations }
+  end;
+
+var
+  DM: TDM;
+
+implementation
+
+{%CLASSGROUP 'Vcl.Controls.TControl'}
+
+{$R *.dfm}
+
+function TDM.NextSequenceValue(sSequenceName: String): Integer;
+begin
+  qrySequencia.SQL.Text := 'SELECT NEXT VALUE FOR ' + sSequenceName + ' AS NEXT_VALUE FROM RDB$DATABASE';
+  qrySequencia.Open;
+  try
+    Result := qrySequencia.FieldByName('NEXT_VALUE').AsInteger;
+  finally
+    qrySequencia.Close;
+  end;
+end;
+
+function TDM.LookupQuery(LookupKeyValues: Variant; sLookupKeyFields: String; sLookupTable: String; sLookupResultFields: String): Variant;
+var
+  i: Integer;
+  sAux: String;
+begin
+  QryLookup.SQL.Clear;
+  QryLookup.SQL.Add('SELECT');
+  QryLookup.SQL.Add('  ' + StringReplace(sLookupResultFields, ';', ',', [rfReplaceAll]));
+  QryLookup.SQL.Add('FROM');
+  QryLookup.SQL.Add('  ' + sLookupTable);
+  QryLookup.SQL.Add('WHERE');
+
+  if VarIsArray(LookupKeyValues) then
+  begin
+    for i := 1 to CSVSubStrCount(sLookupKeyFields) do
+    begin
+      sAux := VarToStr(LookupKeyValues[i-1]);
+      if VarType(LookupKeyValues[i-1]) = varString then
+        sAux := '''' + sAux + '''';
+      sAux := '  ' + CSVSubStr(sLookupKeyFields, i) + ' = ' + sAux;
+
+      if i < CSVSubStrCount(sLookupKeyFields) then
+        sAux := sAux + ' AND';
+
+      QryLookup.SQL.Add(sAux);
+    end;
+  end
+  else
+  begin
+    sAux := VarToStr(LookupKeyValues);
+    if VarType(LookupKeyValues) = varString then
+      sAux := '''' + sAux + '''';
+    sAux := '  ' + sLookupKeyFields + ' = ' + sAux;
+
+    QryLookup.SQL.Add(sAux);
+  end;
+
+  QryLookup.Open;
+  try
+    if QryLookup.FieldCount > 1 then
+    begin
+      Result := VarArrayCreate([0, QryLookup.FieldCount-1], varVariant);
+      for i := 0 to QryLookup.FieldCount-1 do
+        Result[i] := QryLookup.Fields[i].Value;
+    end
+    else
+    begin
+      Result := QryLookup.Fields[0].Value;
+    end;
+  finally
+    QryLookup.Close;
+  end;
+end;
+
+procedure TDM.DataSetLookupQuery(DataSet: TDataSet; sFields: String; LookupKeyValues: Variant; sLookupKeyFields: String; sLookupTable: String; sLookupResultFields: String);
+var
+  LookupResultFields: Variant;
+  i: Integer;
+  sFieldName: String;
+begin
+  LookupResultFields := DM.LookupQuery(LookupKeyValues, sLookupKeyFields, sLookupTable, sLookupResultFields);
+
+  if VarIsArray(LookupResultFields) then
+  begin
+    for i := 0 to VarArrayHighBound(LookupResultFields, 1) do
+    begin
+      sFieldName := CSVSubStr(sFields, i+1);
+      DataSet.FieldByName(sFieldName).Value := LookupResultFields[i];
+    end;
+  end
+  else
+  begin
+    DataSet.FieldByName(sFields).Value := LookupResultFields;
+  end;
+end;
+
+procedure TDM.DataModuleCreate(Sender: TObject);
+var
+  sFileName: String;
+begin
+  sFileName := ChangeFileExt(Application.ExeName, '.ini');
+  IniFile := TIniFile.Create(sFileName);
+
+  IniFile.WriteString('SGBD', 'DataBase',  IniFile.ReadString('SGBD', 'DataBase',  'C:\MEA\Bancos\Melkiland\DADOS.FDB'));
+  IniFile.WriteString('SGBD', 'User_Name', IniFile.ReadString('SGBD', 'User_Name', 'SYSDBA'));
+  IniFile.WriteString('SGBD', 'Password',  IniFile.ReadString('SGBD', 'Password',  'masterkey'));
+
+  Conexao.Params.Values['Database'] := IniFile.ReadString('SGBD', 'DataBase', '');
+  Conexao.Params.Values['User_Name'] := IniFile.ReadString('SGBD', 'User_Name', '');
+  Conexao.Params.Values['Password'] := IniFile.ReadString('SGBD', 'Password', '');
+  Conexao.Connected := True;
+end;
+
+
+procedure TDM.FDConnectionBeforeConnect(Sender: TObject);
+begin
+  Conexao.Params.Database := IniFile.ReadString('SGBD', 'DataBase', '');
+  Conexao.Params.UserName := IniFile.ReadString('SGBD', 'User_Name', '');
+  Conexao.Params.Password := IniFile.ReadString('SGBD', 'Password', '');
+end;
+
+procedure TDM.FDConnectionAfterConnect(Sender: TObject);
+begin
+  Conexao.ExecSQL('ALTER SESSION SET NLS_NUMERIC_CHARACTERS=''.,''');
+end;
+
+procedure TDM.DataModuleDestroy(Sender: TObject);
+begin
+  IniFile.Free;
+end;
+
+end.

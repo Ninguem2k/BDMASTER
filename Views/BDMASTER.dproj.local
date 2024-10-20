@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+  <Transactions>
+    <Transaction>2024/10/20 11:32:33.906,=C:\Users\Delphi\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2024/10/20 12:11:56.520,C:\Users\Delphi\Documents\BDMASTER\uHome.pas=C:\Users\Delphi\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2024/10/20 12:11:56.520,C:\Users\Delphi\Documents\BDMASTER\uHome.dfm=C:\Users\Delphi\Documents\Embarcadero\Studio\Projects\Unit1.dfm</Transaction>
+    <Transaction>2024/10/20 12:24:17.299,=C:\Users\Delphi\Documents\BDMASTER\ModuloDados.pas</Transaction>
+    <Transaction>2024/10/20 12:24:17.628,=C:\Users\Delphi\Documents\BDMASTER\uNovaConnec.pas</Transaction>
+    <Transaction>2024/10/20 12:24:17.877,=C:\Users\Delphi\Documents\BDMASTER\uTabelasNameAjuste.pas</Transaction>
+    <Transaction>2024/10/20 12:41:12.041,C:\Users\Delphi\Documents\BDMASTER\BDMASTER.dproj=C:\Users\Delphi\Documents\Embarcadero\Studio\Projects\Project1.dproj</Transaction>
+  </Transactions>
+</BorlandProject>

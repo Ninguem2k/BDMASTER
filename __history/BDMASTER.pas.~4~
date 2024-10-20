@@ -1,0 +1,57 @@
+unit BDMASTER;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, Vcl.ExtCtrls;
+
+type
+  TForm1 = class(TForm)
+    Panel1: TPanel;
+    MainMenu: TMainMenu;
+    Aplicativo1: TMenuItem;
+    SalvarF22: TMenuItem;
+    SalvarF21: TMenuItem;
+    SalvarCtrlS1: TMenuItem;
+    N3: TMenuItem;
+    N4: TMenuItem;
+    ProcessoETL1: TMenuItem;
+    Mapeamentos1: TMenuItem;
+    Filtros1: TMenuItem;
+    ransformaes1: TMenuItem;
+    Processos1: TMenuItem;
+    N1: TMenuItem;
+    ServidordeProcessos1: TMenuItem;
+    Cadastros1: TMenuItem;
+    abelas1: TMenuItem;
+    Colunas1: TMenuItem;
+    N2: TMenuItem;
+    Junes1: TMenuItem;
+    Consultas1: TMenuItem;
+    Processamentos1: TMenuItem;
+    Ferramentas1: TMenuItem;
+    LimpezadeProcessamentos1: TMenuItem;
+    N5: TMenuItem;
+    procedure Sair2Click(Sender: TObject);
+    procedure SalvarF22Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+
+implementation
+
+{$R *.dfm}
+
+procedure TForm1.SalvarF22Click(Sender: TObject);
+begin
+  FrmNovaConnec := TFrmNovaConnec.Create(Application);
+  FrmNovaConnec.Show;
+end;
+
+end.

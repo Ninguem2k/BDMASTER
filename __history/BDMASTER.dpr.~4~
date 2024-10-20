@@ -1,0 +1,14 @@
+program BDMASTER;
+
+uses
+  Vcl.Forms,
+  uHome in 'Views\uHome.pas' {frmHome};
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+  Application.CreateForm(TfrmHome, frmHome);
+  Application.Run;
+end.

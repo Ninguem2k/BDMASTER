@@ -1,0 +1,20 @@
+program BDMASTER;
+
+uses
+  Vcl.Forms,
+  uHome in 'uHome.pas' {frmHome},
+  ModuloDados in 'ModuloDados.pas' {DM: TDataModule},
+  uNovaConnec in 'uNovaConnec.pas' {frmNovaConnec},
+  uTabelasNameAjuste in 'uTabelasNameAjuste.pas' {frmJusteTabelaNome};
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+  Application.CreateForm(TfrmHome, frmHome);
+  Application.CreateForm(TDM, DM);
+  Application.CreateForm(TfrmNovaConnec, frmNovaConnec);
+  Application.CreateForm(TfrmJusteTabelaNome, frmJusteTabelaNome);
+  Application.Run;
+end.

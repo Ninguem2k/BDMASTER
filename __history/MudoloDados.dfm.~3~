@@ -1,0 +1,46 @@
+object DataModule1: TDataModule1
+  Height = 480
+  Width = 640
+  object WaitCursor: TFDGUIxWaitCursor
+    Provider = 'Forms'
+    Left = 24
+    Top = 208
+  end
+  object Transacao: TFDTransaction
+    Connection = Conexao
+    Left = 24
+    Top = 144
+  end
+  object FBDriver: TFDPhysFBDriverLink
+    VendorLib = 'C:\Program Files (x86)\Firebird\Firebird_3_0\fbclient.dll'
+    Left = 24
+    Top = 80
+  end
+  object Conexao: TFDConnection
+    Params.Strings = (
+      'User_Name=SYSDBA'
+      'Password=masterkey'
+      'Protocol=TCPIP'
+      'Port=3050'
+      'Database=C:\MEA\Bancos\Melkiland\DADOS.FDB'
+      'Server=127.0.0.1'
+      'DriverID=FB')
+    FetchOptions.AssignedValues = [evMode, evAutoClose]
+    FormatOptions.AssignedValues = [fvFmtDisplayDate, fvFmtDisplayNumeric]
+    ResourceOptions.AssignedValues = [rvAutoReconnect]
+    ResourceOptions.AutoReconnect = True
+    UpdateOptions.AssignedValues = [uvAutoCommitUpdates]
+    UpdateOptions.AutoCommitUpdates = True
+    LoginPrompt = False
+    Transaction = Transacao
+    UpdateTransaction = Transacao
+    Left = 24
+    Top = 16
+  end
+  object qrySequencia: TFDQuery
+    AfterDelete = qrySequenciaAfterDelete
+    Connection = Conexao
+    Left = 32
+    Top = 288
+  end
+end

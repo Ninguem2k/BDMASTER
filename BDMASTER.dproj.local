@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2024/10/20 11:32:33.000.906,=C:\Users\Delphi\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2024/10/20 12:11:56.000.520,C:\Users\Delphi\Documents\Embarcadero\Studio\Projects\Unit1.pas=C:\Users\Delphi\Documents\BDMASTER\uHome.pas</Transaction>
+    <Transaction>2024/10/20 12:11:56.000.520,C:\Users\Delphi\Documents\Embarcadero\Studio\Projects\Unit1.dfm=C:\Users\Delphi\Documents\BDMASTER\uHome.dfm</Transaction>
+    <Transaction>2024/10/20 12:24:17.000.877,=C:\Users\Delphi\Documents\BDMASTER\uTabelasNameAjuste.pas</Transaction>
+    <Transaction>2024/10/20 12:24:17.000.299,=C:\Users\Delphi\Documents\BDMASTER\ModuloDados.pas</Transaction>
+    <Transaction>2024/10/20 12:24:17.000.628,=C:\Users\Delphi\Documents\BDMASTER\uNovaConnec.pas</Transaction>
+    <Transaction>2024/10/20 12:41:12.000.041,C:\Users\Delphi\Documents\Embarcadero\Studio\Projects\Project1.dproj=C:\Users\Delphi\Documents\BDMASTER\BDMASTER.dproj</Transaction>
+    <Transaction>2024/10/20 12:47:56.131,=C:\Users\Delphi\Documents\BDMASTER\Views\uHome.pas</Transaction>
+    <Transaction>2024/10/20 12:50:52.485,=C:\Users\Delphi\Documents\BDMASTER\Views\ModuloDados.pas</Transaction>
+    <Transaction>2024/10/20 12:51:16.438,=C:\Users\Delphi\Documents\BDMASTER\Views\uNovaConnec.pas</Transaction>
+    <Transaction>2024/10/20 12:51:16.641,=C:\Users\Delphi\Documents\BDMASTER\Views\uTabelasNameAjuste.pas</Transaction>
+  </Transactions>
+</BorlandProject>

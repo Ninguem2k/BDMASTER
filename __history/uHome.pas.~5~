@@ -1,0 +1,73 @@
+unit uHome;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.Buttons,
+  Vcl.Imaging.pngimage, Vcl.ComCtrls, Vcl.Menus, Vcl.VirtualImage,
+  System.ImageList, Vcl.ImgList;
+
+type
+  TfrmHome = class(TForm)
+    Panel1: TPanel;
+    Image1: TImage;
+    MainMenu: TMainMenu;
+    Aplicativo1: TMenuItem;
+    SalvarF22: TMenuItem;
+    SalvarF21: TMenuItem;
+    SalvarCtrlS1: TMenuItem;
+    N3: TMenuItem;
+    N4: TMenuItem;
+    ProcessoETL1: TMenuItem;
+    Mapeamentos1: TMenuItem;
+    Filtros1: TMenuItem;
+    ransformaes1: TMenuItem;
+    Processos1: TMenuItem;
+    N1: TMenuItem;
+    ServidordeProcessos1: TMenuItem;
+    Cadastros1: TMenuItem;
+    abelas1: TMenuItem;
+    Colunas1: TMenuItem;
+    N2: TMenuItem;
+    Junes1: TMenuItem;
+    Consultas1: TMenuItem;
+    Processamentos1: TMenuItem;
+    Ferramentas1: TMenuItem;
+    LimpezadeProcessamentos1: TMenuItem;
+    Sair: TMenuItem;
+    StatusBar: TStatusBar;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmHome: TfrmHome;
+
+implementation
+
+{$R *.dfm}
+
+uses uNovaConnec, uTabelasNameAjuste;
+
+procedure TfrmHome.Mapeamentos1Click(Sender: TObject);
+begin
+  frmJusteTabelaNome := TfrmJusteTabelaNome.Create(Application);
+  frmJusteTabelaNome.Show;
+end;
+
+procedure TfrmHome.SairClick(Sender: TObject);
+begin
+  Exit;
+end;
+
+procedure TfrmHome.SalvarF22Click(Sender: TObject);
+begin
+  FrmNovaConnec := TFrmNovaConnec.Create(Application);
+  FrmNovaConnec.Show;
+end;
+
+end.
+
